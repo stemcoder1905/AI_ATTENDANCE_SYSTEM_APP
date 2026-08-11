@@ -252,7 +252,11 @@ def teacher_tab_attendance_records():
 
         data.append({
             "ts_group": ts.split(".")[0] if ts else None,
-            "Time": datetime.fromisoformat(ts).strftime("%Y-%m-%d %I:%M %p") if ts else "N'A",
+            "Time":  (
+    pd.to_datetime(ts, utc=True)
+    .tz_convert("Asia/Kolkata")
+    .strftime("%Y-%m-%d %I:%M %p")
+) if ts else "N/A",
             "Subject": r['subjects']['name'],
             "Subject Code":r['subjects']['subject_code'],
             "is_present": bool(r.get('is_present', False))
