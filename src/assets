@@ -1,0 +1,79 @@
+import streamlit as st
+import base64
+
+
+def show_footer():
+    with open("assets/aimlnext_logo_base.png", "rb") as f:
+        base_logo = base64.b64encode(f.read()).decode()
+
+    with open("assets/aimlnext_logo_blink_dot.png", "rb") as f:
+        dot_logo = base64.b64encode(f.read()).decode()
+
+    st.markdown(
+        f"""
+        <style>
+        .custom-footer {{
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            z-index: 9999;
+        }}
+
+        .footer-logo {{
+            position: relative;
+            display: inline-block;
+            width: 70px;
+            height: 70px;
+        }}
+
+        .footer-logo .base-logo {{
+            width: 70px;
+            height: 70px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }}
+
+        .footer-logo .blink-dot {{
+            width: 70px;
+            height: 70px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            animation: blinkDot 1.2s infinite;
+        }}
+
+        @keyframes blinkDot {{
+            0%, 45% {{
+                opacity: 1;
+            }}
+
+            50%, 100% {{
+                opacity: 0;
+            }}
+        }}
+
+        .footer-text {{
+            margin-top: 4px;
+            font-size: 12px;
+            color: #8b9aa5;
+        }}
+        </style>
+
+        <div class="custom-footer">
+            <div class="footer-logo">
+                <img class="base-logo"
+                     src="data:image/png;base64,{base_logo}">
+                <img class="blink-dot"
+                     src="data:image/png;base64,{dot_logo}">
+            </div>
+
+            <div class="footer-text">
+                AI Attendance System
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
